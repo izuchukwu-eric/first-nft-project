@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
-import CollectionCard from "./components/CollectionCard";
 import "./App.css";
 import axios from "axios";
 import PunkList from "./components/PunkList";
@@ -8,6 +7,7 @@ import Main from "./components/Main";
 
 function App() {
   const [punkListData, setPunkListData] = useState([]);
+  const [selectedPunk, setSelectedPunk] = useState(0);
 
   useEffect(() => {
     const getMyNfts = async () => {
@@ -24,8 +24,15 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <Main />
-      <PunkList punkListData={punkListData} />
+      {punkListData.length > 0 && (
+        <>
+          <Main selectedPunk={selectedPunk} punkListData={punkListData} />
+          <PunkList
+            punkListData={punkListData}
+            setSelectedPunk={setSelectedPunk}
+          />
+        </>
+      )}
     </div>
   );
 }
